@@ -8,15 +8,22 @@ let dvd;
 let bbox;
 let textHeight;
 
+var pepe;
 let r, g, b;
 
 function preload() {
-  dvd = loadImage('dvd_logo.png');
-  font = loadFont('DS-DIGIB.TTF')
+  dvd = loadImage('bouncink_v2_w200.png');
+  pepe = loadImage('pepedance_transparent.gif')
+  font = loadFont('DS-DIGIB.TTF');
 }
 
+
+// NIKO PARAMETER
+var pepescale = 0.23
 const textSpeed = 2
-const startingMinutes = 0.2;
+const startingMinutes = 5;
+
+
 let timeleftSeconds = startingMinutes * 60;
 let countDown = ''
 let countDownFinished = false
@@ -44,17 +51,20 @@ function setup() {
   y = random(height);
   xspeed = textSpeed;
   yspeed = textSpeed;
-  textSize(30);
+  textSize(42);
   textFont(font);
   bbox = font.textBounds(countDown)
   textHeight = bbox.h + 6
+
+  pepe.width = pepe.width * pepescale;
+  pepe.height = pepe.height * pepescale;
+
+  colorMode(HSL, 360, 100, 100)
   pickColor();
 }
 
 function pickColor() {
-  r = random(50, 256);
-  g = random(50, 256);
-  b = random(50, 256);
+  h = random(0, 360);
 }
 
 updateCountdown()
@@ -62,16 +72,17 @@ setInterval(updateCountdown, 1000);
 
 function draw() {
   background(0);
-  // rect(x, y, 80, 60);
-  // Draw the DVD logo
-  tint(r, g, b);
-  fill(r, g, b);
+  tint(h, 100, 70);
+  fill(h, 100, 70);
   image(dvd, x, y);
   if(!countDownFinished){
-    text(countDown, x+31, y+105);
+    text(countDown, x+58, y+168);
   }
   else{
-    text(countDown, x+17, y+105);
+    text(countDown, x+38, y+168);
+    noTint();
+    image(pepe,x+23,y+50);
+    tint(h, 100, 70)
   }
 
   x = x + xspeed;
@@ -96,5 +107,4 @@ function draw() {
     y = 0;
     pickColor();
   }
-
 }
